@@ -13,7 +13,7 @@ local settings = {
    btfs_flags = [[]],
 }
 
-(require "mp.options").read_options(settings, "btfs-hook")
+(require "mp.options").read_options(settings, "btfs-stream")
 
 local utils = require "mp.utils";
 
