@@ -1,5 +1,8 @@
 -- TODO why is mpv sometimes but not always slow to quit? (takes few seconds
 --      before btfs_cleanup is called)
+--   - this happens even when running btfs outside mpv
+--   - TODO don't need extra bash scripts (they don't help with this issue I
+--      don't think)
 -- TODO possible before fusermount -u was not slow and was actually above issue;
 --      double check and get rid of shell scripts if this is the case
 -- TODO btfs mount will fail for previously mounted torrents if unmount is false

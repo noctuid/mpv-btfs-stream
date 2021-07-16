@@ -5,12 +5,6 @@ This script will detect =magnet:= links and torrent files/urls ending in =torren
 
 Unlike using ~btfs~ directly, this script automatically handles mounting, playing, and unmounting for you.
 
-If you were to use ~webtorrent~ instead of ~btfs~, it would handle streaming for you too. One reason you might want to use this script over calling ~webtorrent --mpv~ is that you can start mpv with a playlist of multiple magnet links or add magnet links to the playlist of an already open mpv window (e.g. using one of the scripts that allows appending a link from the clipboard to the playlist).
-
-Another benefit is consistency of syntax (e.g. if you have a shell command or keybinding to call ~mpv <clipboard>~, you don't need to handle torrents differently). By using this script, you can also see mpv output (which is hidden when calling ~webtorrent~ directly).
-
-Finally, this script should allow viewing any files mpv supports (including torrents of images, which I think webtorrent may not work correctly with; even if it does, mpv-webtorrent-hook could not easily support this functionality).
-
 * Requirements
 - [[https://github.com/johang/btfs][btfs]]
 - on linux (or maybe similar)
@@ -32,21 +26,21 @@ This plugin is in alternative to [[https://github.com/noctuid/mpv-webtorrent-hoo
 Both
 - Allow using a normal mpv call to play a torrent: ~mpv <torrent identifier>~
 - Correctly show video title (i.e. file name not magnet link)
+- Can play torrents that contain multiple media files (including images or archives of images)
+- Will remember the last viewed media file in a torrent (though btfs-stream requires no extra code to do this; mpv does it automatically when playing a directory)
 
 Advantages of btfs-stream
-- Btfs-stream can play torrents that contain a directory with multiple videos
-- Btfs-stream can play non-video torrents (e.g. directory or zipfile of images); potentially useful if you use mpv as an image viewer
 - Btfs allows the script to be much simpler since it is not necessary to parse any output (edge cases and problems are less likely, e.g. webtorrent script previously broke when webtorrent output changed)
 
-Major disadvantage
-- Btfs is much slower. Once the video is playing, playback seems fine, but with btfs, it takes much longer for the video to actually start playing (e.g. 5 seconds with webtorrent-cli vs. 20 for btfs).
+Major disadvantages
+- Btfs is much slower. Once the video is playing, playback seems fine most of the time, but with btfs, it takes much longer for the video to actually start playing (e.g. 5 seconds with webtorrent-cli vs. 20 for btfs).
+- It may take a few seconds in some cases for mpv to quit
 
 Minor disadvantages
-- It may take a few seconds in some cases for mpv to quit
 - The download speed will not be shown while waiting for the video to play
 - Not all webtorrent torrent identifiers are supported (i.e. info hash). Btfs only supports playing magnet links and torrent files by default. It would be possible to add support for playing =webtorrent://<info-hash>=, but this isn't really that useful, so I haven't done it.
 
-If you want to normally use =webtorrent-hook= but be able to open torrents that contain multiple media files, you can install both plugins and set the btfs-stream =only_handle_prefixed_files= option to =yes=. Then prefix the torrent path or magnet link with =btfs://= when you want to use =btfs-stream=.
+If you want to normally use =webtorrent-hook= but be able to open some torrents with btfs (maybe there are some complex nested torrents webtorrent doesn't handle well?), you can install both plugins and set the btfs-stream =only_handle_prefixed_files= option to =yes=. Then prefix the torrent path or magnet link with =btfs://= when you want to use =btfs-stream=.
 
 * Configuration
 In =~/.config/mpv/script-opts/btfs-stream.conf=, you can change the following settings:
